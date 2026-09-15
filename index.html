@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pemilihan Ketua OSIS — MTsN 3 Subang</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="balai">
+
+  <header class="header-resmi">
+    <div class="header-resmi__identitas">
+      <div class="segel">OS</div>
+      <div class="header-resmi__teks">
+        <div class="sekolah" id="txtSekolah">MTsN 3 Subang</div>
+        <div class="judul">Pemilihan Ketua OSIS</div>
+      </div>
+    </div>
+    <span class="status-pill" id="pillStatus">Memeriksa status…</span>
+  </header>
+
+  <section class="hero">
+    <div class="hero__eyebrow" id="txtPeriode">Periode 2026/2027</div>
+    <h1>Satu suara, satu suara.<br>Tentukan arah OSIS satu tahun ke depan.</h1>
+    <p>Masukkan NISN kamu untuk memastikan setiap siswa hanya memilih sekali, lalu pilih satu pasangan calon.</p>
+  </section>
+
+  <main class="wrap">
+
+    <!-- Kartu identitas: muncul sebelum daftar kandidat -->
+    <div class="kartu-suara" id="kartuIdentitas">
+      <h2>Verifikasi identitas</h2>
+      <div class="sub">Data ini hanya dipakai untuk memastikan kamu belum memilih sebelumnya.</div>
+
+      <div class="field">
+        <label for="inputNisn">NISN</label>
+        <input type="text" id="inputNisn" inputmode="numeric" placeholder="Contoh: 0091234567" maxlength="12">
+        <small>Lihat di kartu pelajar atau buku rapor.</small>
+      </div>
+
+      <div class="field">
+        <label for="inputNama">Nama lengkap</label>
+        <input type="text" id="inputNama" placeholder="Nama sesuai absensi kelas">
+      </div>
+
+      <div class="field">
+        <label for="inputKelas">Kelas</label>
+        <input type="text" id="inputKelas" placeholder="Contoh: VIII-A">
+      </div>
+
+      <button class="btn btn--maroon" id="btnLanjut">Lanjut ke surat suara</button>
+      <div id="pesanIdentitas" style="margin-top:12px; font-size:13.5px; color:#9B1B41;"></div>
+    </div>
+
+    <!-- Daftar kandidat: muncul setelah identitas terverifikasi -->
+    <div id="areaKandidat" hidden>
+      <div class="catatan" id="catatanPartisipasi" hidden></div>
+      <h2 style="text-align:center; margin-bottom:6px;">Pilih satu pasangan calon</h2>
+      <p style="text-align:center; color:var(--ink-soft); font-size:14px; margin-bottom:0;">Ketuk kartu kandidat, lalu tekan tombol pilih untuk mengonfirmasi.</p>
+      <div class="daftar-kandidat" id="daftarKandidat"></div>
+    </div>
+
+    <div id="areaKosong" class="kosong" hidden>
+      Belum ada kandidat yang terdaftar, atau pemilihan belum dibuka oleh panitia.
+    </div>
+
+    <div id="areaSudahMemilih" class="kartu-suara" hidden style="margin-top:40px;">
+      <h2>Kamu sudah memilih</h2>
+      <div class="sub">Terima kasih sudah menggunakan hak suaramu. Setiap NISN hanya dapat memilih satu kali.</div>
+      <a href="hasil.html" class="btn btn--outline">Lihat hasil sementara</a>
+    </div>
+
+  </main>
+
+  <!-- Modal konfirmasi -->
+  <div class="overlay" id="overlayKonfirmasi" hidden>
+    <div class="modal">
+      <div class="segel-besar">✓</div>
+      <h3>Konfirmasi pilihanmu</h3>
+      <p id="teksKonfirmasi">Kamu memilih —. Suara tidak dapat diubah setelah dikirim.</p>
+      <div class="modal__aksi">
+        <button class="btn btn--outline" id="btnBatal">Batal</button>
+        <button class="btn btn--maroon" id="btnKirim">Kirim suara</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="jejak">Sistem e-voting OSIS &middot; dibangun untuk MTsN 3 Subang</footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="assets/firebase-config.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/vote.js"></script>
+</body>
+</html>

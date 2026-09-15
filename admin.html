@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Panitia — Pemilihan Ketua OSIS</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="balai">
+
+  <header class="header-resmi">
+    <div class="header-resmi__identitas">
+      <div class="segel">OS</div>
+      <div class="header-resmi__teks">
+        <div class="sekolah" id="txtSekolah">MTsN 3 Subang</div>
+        <div class="judul">Panel Panitia Pemilihan</div>
+      </div>
+    </div>
+    <button class="btn btn--outline" id="btnLogout" style="width:auto; padding:8px 16px; display:none;">Keluar</button>
+  </header>
+
+  <!-- LOGIN -->
+  <div class="wrap" id="areaLogin">
+    <div class="kartu-suara login-box">
+      <h2>Masuk sebagai panitia</h2>
+      <div class="sub">Gunakan akun yang sudah dibuat di Firebase Authentication. Lihat README untuk cara membuatnya.</div>
+      <div class="field">
+        <label for="inputEmail">Email panitia</label>
+        <input type="email" id="inputEmail" placeholder="panitia@sekolah.sch.id">
+      </div>
+      <div class="field">
+        <label for="inputPassword">Kata sandi</label>
+        <input type="password" id="inputPassword" placeholder="••••••••">
+      </div>
+      <button class="btn btn--maroon" id="btnLogin">Masuk</button>
+      <div id="pesanLogin" style="margin-top:12px; font-size:13.5px; color:#9B1B41;"></div>
+    </div>
+  </div>
+
+  <!-- PANEL -->
+  <main class="wrap" id="areaPanel" hidden>
+
+    <nav class="tab-admin">
+      <a href="#kandidat" class="aktif" data-tab="kandidat">Kandidat</a>
+      <a href="#pengaturan" data-tab="pengaturan">Pengaturan pemilihan</a>
+      <a href="#suara" data-tab="suara">Riwayat suara</a>
+    </nav>
+
+    <div class="admin-grid">
+
+      <!-- TAB KANDIDAT -->
+      <section class="panel" id="tabKandidat">
+        <h2>Tambah kandidat</h2>
+        <div class="sub">Nomor urut menentukan urutan tampil di surat suara.</div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label>Nomor urut</label>
+            <input type="number" id="fNomor" min="1">
+          </div>
+          <div class="field">
+            <label>URL foto (opsional)</label>
+            <input type="text" id="fFoto" placeholder="https://...">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label>Nama calon ketua</label>
+            <input type="text" id="fKetua">
+          </div>
+          <div class="field">
+            <label>Nama calon wakil</label>
+            <input type="text" id="fWakil">
+          </div>
+        </div>
+        <div class="field">
+          <label>Visi (ringkas, 1 kalimat)</label>
+          <textarea id="fVisi" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label>Misi (opsional, pisahkan dengan baris baru)</label>
+          <textarea id="fMisi" rows="3"></textarea>
+        </div>
+        <button class="btn btn--maroon" id="btnSimpanKandidat">Simpan kandidat</button>
+        <div id="pesanKandidat" style="margin-top:10px; font-size:13.5px;"></div>
+
+        <div style="margin-top:28px;">
+          <table class="tabel-kandidat">
+            <thead>
+              <tr><th></th><th>No.</th><th>Ketua &amp; Wakil</th><th>Suara masuk</th><th></th></tr>
+            </thead>
+            <tbody id="tbodyKandidat"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB PENGATURAN -->
+      <section class="panel" id="tabPengaturan" hidden>
+        <h2>Status pemilihan</h2>
+        <div class="sub">Buka pemilihan hanya saat hari-H agar siswa tidak bisa memilih di luar jadwal.</div>
+
+        <div class="toggle-row">
+          <div>
+            <strong>Pemilihan dibuka</strong>
+            <div class="sub" style="margin:2px 0 0;">Saat aktif, siswa dapat mengakses surat suara.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggleBuka">
+            <span class="switch__track"></span>
+          </label>
+        </div>
+
+        <h2 style="margin-top:24px;">Zona berbahaya</h2>
+        <div class="sub">Menghapus seluruh suara tidak dapat dibatalkan. Gunakan hanya untuk uji coba sebelum hari-H.</div>
+        <button class="btn btn-mini btn-mini--bahaya" id="btnResetSuara">Hapus semua suara</button>
+      </section>
+
+      <!-- TAB SUARA -->
+      <section class="panel" id="tabSuara" hidden>
+        <h2>Riwayat suara masuk</h2>
+        <div class="sub">Menampilkan siapa sudah memilih (bukan pilihannya) untuk keperluan absensi.</div>
+        <table class="tabel-kandidat">
+          <thead><tr><th>NISN</th><th>Nama</th><th>Kelas</th><th>Waktu</th></tr></thead>
+          <tbody id="tbodySuara"></tbody>
+        </table>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="jejak">Panel ini hanya untuk panitia pemilihan &middot; MTsN 3 Subang</footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="assets/firebase-config.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

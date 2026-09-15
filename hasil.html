@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasil Sementara — Pemilihan Ketua OSIS</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="balai">
+
+  <header class="header-resmi">
+    <div class="header-resmi__identitas">
+      <div class="segel">OS</div>
+      <div class="header-resmi__teks">
+        <div class="sekolah" id="txtSekolah">MTsN 3 Subang</div>
+        <div class="judul">Hasil Perolehan Suara</div>
+      </div>
+    </div>
+    <span class="status-pill" id="pillStatus">Memeriksa status…</span>
+  </header>
+
+  <main class="wrap" style="padding-top:48px;">
+
+    <div class="ringkasan" id="ringkasan"></div>
+
+    <div id="areaHasil"></div>
+
+    <div id="areaKosong" class="kosong" hidden>
+      Belum ada kandidat terdaftar.
+    </div>
+
+    <!-- Grafik -->
+    <section class="panel grafik-panel" id="areaGrafik" hidden>
+      <h2>Grafik perolehan suara</h2>
+      <div class="sub">Diperbarui otomatis setiap ada suara masuk.</div>
+      <div class="grafik-grid">
+        <div class="grafik-kotak">
+          <canvas id="chartBatang" height="260"></canvas>
+        </div>
+        <div class="grafik-kotak grafik-kotak--kecil">
+          <canvas id="chartDonat" height="260"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rekapitulasi resmi -->
+    <section class="panel rekap-panel" id="areaRekap" hidden>
+      <div class="rekap-header">
+        <div>
+          <h2>Rekapitulasi hasil pemungutan suara</h2>
+          <div class="sub" id="rekapSubjudul">Pemilihan Ketua &amp; Wakil Ketua OSIS</div>
+        </div>
+        <button class="btn btn--outline btn-cetak" id="btnCetakRekap">Cetak rekapitulasi</button>
+      </div>
+
+      <table class="tabel-kandidat tabel-rekap">
+        <thead>
+          <tr>
+            <th>Peringkat</th>
+            <th>No. Urut</th>
+            <th>Pasangan Calon</th>
+            <th>Jumlah Suara</th>
+            <th>Persentase</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyRekap"></tbody>
+        <tfoot>
+          <tr class="rekap-total">
+            <td colspan="3">Total suara sah</td>
+            <td id="rekapTotalSuara">0</td>
+            <td>100%</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="rekap-tapak" id="rekapTapak">
+        Dicetak pada <span id="rekapWaktuCetak">-</span> &middot; Sistem E-Voting OSIS MTsN 3 Subang
+      </div>
+    </section>
+
+    <div style="text-align:center; margin-top:32px;">
+      <a href="index.html" class="btn btn--outline" style="max-width:220px; margin:0 auto;">Kembali ke halaman voting</a>
+    </div>
+
+  </main>
+
+  <footer class="jejak">Hasil diperbarui otomatis secara real-time &middot; MTsN 3 Subang</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="assets/firebase-config.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/hasil.js"></script>
+</body>
+</html>

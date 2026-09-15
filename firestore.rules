@@ -1,0 +1,41 @@
+rules_version = '2';
+
+// =============================================================
+// ATURAN KEAMANAN FIRESTORE — Pemilihan Ketua OSIS
+// -------------------------------------------------------------
+// Cara pakai: salin isi file ini ke tab "Rules" di
+// Firebase Console > Firestore Database > Rules, lalu klik "Publish".
+// =============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // KANDIDAT: semua orang boleh membaca (untuk surat suara & hasil),
+    // tapi hanya panitia yang login (email/password) yang boleh menulis.
+    match /kandidat/{kandidatId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // PENGATURAN (status buka/tutup pemilihan): semua boleh membaca,
+    // hanya panitia yang boleh mengubah.
+    match /pengaturan/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // SUARA: id dokumen = NISN siswa.
+    // - Siapa pun boleh membaca (dipakai untuk hasil real-time & cek "sudah memilih").
+    // - Siapa pun boleh MEMBUAT suara BARU (create), tapi HANYA jika dokumen
+    //   dengan NISN tersebut belum ada — ini yang mencegah memilih dua kali.
+    // - Tidak seorang pun (selain panitia) boleh mengubah (update) suara yang
+    //   sudah masuk, menjaga suara tidak bisa diubah setelah dikirim.
+    // - Hanya panitia yang boleh menghapus (dipakai untuk reset suara).
+    match /suara/{nisn} {
+      allow read: if true;
+      allow create: if !exists(/databases/$(database)/documents/suara/$(nisn));
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+  }
+}
